@@ -19,7 +19,12 @@ import {
 } from 'lucide-react';
 
 // --- KOMPONEN ANIMASI ---
-const FadeUp = ({ children, delay = 0 }) => (
+interface FadeUpProps {
+  children: React.ReactNode;
+  delay?: number;
+}
+
+const FadeUp = ({ children, delay = 0 }: FadeUpProps) => (
   <motion.div
     initial={{ opacity: 0, y: 40 }}
     whileInView={{ opacity: 1, y: 0 }}
@@ -31,7 +36,11 @@ const FadeUp = ({ children, delay = 0 }) => (
 );
 
 // --- KOMPONEN COUNTDOWN ---
-const Countdown = ({ targetDate }) => {
+interface CountdownProps {
+  targetDate: string; // Karena targetDate biasanya string kayak "2026-05-20"
+}
+
+const Countdown = ({ targetDate }: CountdownProps) => {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
@@ -53,7 +62,12 @@ const Countdown = ({ targetDate }) => {
     return () => clearInterval(timer);
   }, [targetDate]);
 
-  const Item = ({ val, label }) => (
+  interface ItemProps {
+    val: number | string; // Bisa angka, bisa string kalau lu kasih padding nol
+    label: string;
+  }
+
+  const Item = ({ val, label }: ItemProps) => (
     <div className="flex flex-col items-center bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-2 md:p-3 min-w-[65px] md:min-w-[75px]">
       <span className="text-xl md:text-2xl font-bold text-white">{val}</span>
       <span className="text-[9px] md:text-[10px] uppercase tracking-widest text-white/80">{label}</span>
@@ -74,14 +88,20 @@ export default function App() {
   const [isOpened, setIsOpened] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [guestName, setGuestName] = useState("Tamu Kehormatan");
-  const [messages, setMessages] = useState([]);
-  const audioRef = useRef(null);
+  const [messages, setMessages] = useState<GuestMessage[]>([]);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const [formData, setFormData] = useState({
     name: '',
     attendance: '',
     message: ''
   });
+
+  interface GuestMessage {
+    name: string;
+    message: string;
+    created_at: string;
+  }
 
   const fetchMessages = async () => {
     const { data, error } = await supabase
@@ -104,10 +124,9 @@ export default function App() {
   const [showError, setShowError] = useState(false);
   const [showCopyToast, setShowCopyToast] = useState(false);
 
-  const scrollToSection = (id) => {
+  const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      // Kita kasih offset dikit (misal -20) biar nggak terlalu nempel atas
       const offset = 20;
       const bodyRect = document.body.getBoundingClientRect().top;
       const elementRect = element.getBoundingClientRect().top;
@@ -121,7 +140,7 @@ export default function App() {
     }
   };
 
-  const handleRSVP = async (e) => {
+  const handleRSVP = async (e: React.FormEvent) => {
     if (e) e.preventDefault(); 
     
     if (!formData.name || !formData.attendance) {
@@ -149,14 +168,26 @@ export default function App() {
       setFormData({ name: guestName, attendance: '', message: '' }); 
       fetchMessages();
     } catch (error) {
-      console.error("Error:", error.message);
+      if (error instanceof Error) {
+        console.error("Error:", error.message);
+      } else {
+        console.error("Error:", error);
+      }
       alert("Gagal terkirim, coba cek koneksi.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const [petals, setPetals] = useState([]);
+  interface Petal {
+    id: number;
+    left: string;
+    duration: number;
+    delay: number;
+    size: number;
+  }
+
+  const [petals, setPetals] = useState<Petal[]>([]);
   useEffect(() => {
     const newPetals = [...Array(12)].map((_, i) => ({
       id: i,
@@ -187,7 +218,7 @@ export default function App() {
       document.body.style.overflow = 'unset';
       window.scrollTo(0, 0);
       
-      const audio = audioRef.current;
+    const audio = audioRef.current;
       if (audio) {
         audio.volume = 0;
         
@@ -222,7 +253,7 @@ export default function App() {
     }
   };
 
-  const copyToClipboard = (text) => {
+  const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
     setShowCopyToast(true);
     setTimeout(() => setShowCopyToast(false), 2000);
@@ -548,7 +579,7 @@ export default function App() {
                 <div className="relative group">
                   <textarea 
                     placeholder=" " 
-                    rows="4" 
+                    rows={4} 
                     value={formData.message}
                     onChange={(e) => setFormData({...formData, message: e.target.value})}
                     className="peer w-full bg-gray-50/50 border-none rounded-2xl px-6 py-4 outline-none transition-all focus:ring-2 focus:ring-[#8CA38D]/20 text-[#5C6B57] font-medium placeholder-transparent resize-none"
