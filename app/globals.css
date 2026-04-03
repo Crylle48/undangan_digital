@@ -1,26 +1,53 @@
-@import "tailwindcss";
+@import "tailwindcss" source("../app");
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Warna Dasar Undangan Lu */
+  --background: #FDFCF8;
+  --foreground: #5C6B57;
+  /* Tambahin variabel warna sage biar gampang dipanggil */
+  --sage-primary: #8CA38D;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-sage: var(--sage-primary);
+  /* Pakai font standar kalau Geist belum ke-install */
+  --font-sans: var(--font-sans, ui-sans-serif, system-ui);
+  --font-serif: var(--font-serif, ui-serif, Georgia);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #1A1C19;
+    --foreground: #E2E3DE;
   }
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  /* Biar transisinya enak pas pindah dark mode */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Animasi Custom Lu */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 8s linear infinite;
+}
+
+/* Scrollbar Custom biar estetik di Undangan */
+@utility custom-scrollbar {
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: var(--sage-primary);
+    border-radius: 10px;
+  }
 }
