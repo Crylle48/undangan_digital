@@ -45,7 +45,7 @@ const FadeUp = ({ children, delay = 0 }: FadeUpProps) => {
 
 // --- KOMPONEN COUNTDOWN ---
 interface CountdownProps {
-  targetDate: string; // Karena targetDate biasanya string kayak "2026-05-20"
+  targetDate: string;
 }
 
 const Countdown = ({ targetDate }: CountdownProps) => {
@@ -389,7 +389,7 @@ export default function App() {
         
           {/* --- SECTION 2: WELCOME & COUNTDOWN --- */}
           <section id="main" className="min-h-screen flex items-center justify-center px-6 py-20 relative overflow-hidden">         
-            <div className="max-w-4xl mx-auto text-center w-full">
+            <div className="relative mt-[-40px] md:mt-[-80px] text-center w-full">
               <FadeUp>
                 <h2 className="font-serif flex flex-col md:flex-row items-center justify-center gap-2 md:gap-6 uppercase">
                   <span
@@ -421,34 +421,32 @@ export default function App() {
           {/* --- SECTION 3: QUOTE --- */}
           <section id="quote" className="py-20 md:py-32 text-center px-6 relative overflow-hidden">
             <FadeUp>
-              <div className="max-w-3xl mx-auto relative group">
-                <div className="absolute -right-13 bottom-[13px] z-20 w-69 h-69 pointer-events-none transition-transform duration-700">
-                  <img
-                    src="https://yyfjsoryfmhlzxoktqdo.supabase.co/storage/v1/object/public/asset/Bunga/Bunga%20Petikan%20Surah.png"
-                    alt="Bunga Sudut Kanan"
-                    className="object-contain object-right-bottom"
-                  />
-                </div>
-
-                <div className="max-w-3xl mx-auto relative p-10 md:p-20 rounded-[60px] shadow-sm border border-white/60 overflow-hidden z-10">
-
+              <div className="max-w-3xl mx-auto relative group h-full">
+                <div className="absolute inset-0 rounded-[60px] shadow-sm border border-white/60 overflow-hidden z-10">
                   <div 
-                    className="absolute inset-0 z-0 transition-transform duration-700"
+                    className="absolute inset-0"
                     style={{ 
                       backgroundImage: `url('https://yyfjsoryfmhlzxoktqdo.supabase.co/storage/v1/object/public/asset/Background/Kertas.jpeg')`, 
                       backgroundSize: 'cover', 
                       backgroundPosition: 'center',
                     }}
                   />
-                  <div className="relative z-2">
-                    <p className="text-lg md:text-2xl leading-relaxed text-black font-light mb-8 tracking-wide">
-                      "Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang."
-                    </p>
-                    <div className="w-8 h-[1px] bg-[#5C6B57]/30 mx-auto mb-6"></div>
-                    <p className="font-bold text-black tracking-[0.2em] text-xs uppercase italic">
-                      - QS. Ar-Rum 21 -
-                    </p>
-                  </div>
+                </div>
+                <div className="absolute -right-10 -bottom-10 md:-right-17 md:bottom-[0.5px] z-20 w-64 h-64 md:w-96 md:h-96 pointer-events-none transition-transform duration-700">
+                  <img
+                    src="https://yyfjsoryfmhlzxoktqdo.supabase.co/storage/v1/object/public/asset/Bunga/Bunga%20Petikan%20Surah.png"
+                    alt="Bunga Sudut"
+                    className="w-full h-full object-contain object-right-bottom" 
+                  />
+                </div>
+                <div className="relative z-30 p-10 md:p-20">
+                  <p className="text-lg md:text-2xl leading-relaxed text-black font-light mb-8 tracking-wide [text-shadow:0_0_15px_rgba(255,255,255,1)]">
+                    "Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang."
+                  </p>
+                  <div className="w-8 h-[1px] bg-[#5C6B57]/30 mx-auto mb-6"></div>
+                  <p className="font-bold text-black tracking-[0.2em] text-xs uppercase italic [text-shadow:0_0_10px_rgba(255,255,255,1)]">
+                    - QS. Ar-Rum 21 -
+                  </p>
                 </div>
               </div>
             </FadeUp>
@@ -903,7 +901,7 @@ export default function App() {
               >
                 <Copy size={14} className="animate-bounce" />
                 <span className="text-[10px] font-bold uppercase tracking-[0.2em]">
-                  Nomor Rekening Berhasil Disalin!
+                  Berhasil Menyalin!
                 </span>
               </motion.div>
             )}
