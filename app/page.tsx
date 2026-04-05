@@ -432,7 +432,7 @@ export default function App() {
                     }}
                   />
                 </div>
-                <div className="absolute -right-10 -bottom-10 md:-right-17 md:bottom-[0.5px] z-20 w-64 h-64 md:w-96 md:h-96 pointer-events-none transition-transform duration-700">
+                <div className="absolute right-[-20px] bottom-[40px] md:-right-16 md:-bottom-0 z-20 w-64 h-64 md:w-96 md:h-96 pointer-events-none transition-transform duration-700">
                   <img
                     src="https://yyfjsoryfmhlzxoktqdo.supabase.co/storage/v1/object/public/asset/Bunga/Bunga%20Petikan%20Surah.png"
                     alt="Bunga Sudut"
